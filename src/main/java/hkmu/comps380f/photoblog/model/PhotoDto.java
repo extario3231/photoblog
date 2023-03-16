@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-public class UploadForm {
+public class PhotoDto {
     private String description;
     private List<MultipartFile> photos;
 
