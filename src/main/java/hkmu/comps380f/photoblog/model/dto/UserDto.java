@@ -1,4 +1,4 @@
-package hkmu.comps380f.photoblog.model;
+package hkmu.comps380f.photoblog.model.dto;
 
 public class UserDto {
     private String username;
