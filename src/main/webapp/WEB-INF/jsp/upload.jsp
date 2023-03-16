@@ -3,11 +3,12 @@
 <html>
 <head>
     <title>Upload</title>
+    <link href="<c:url value="/style.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
     <h2>Upload photos</h2>
     <br>
-    <form:form method="POST"  enctype="multipart/form-data" modelAttribute="uploadForm">
+    <form:form method="POST" cssStyle="text-align: center" enctype="multipart/form-data" modelAttribute="uploadForm">
         <form:label path="description">Description</form:label>
         <br>
         <form:textarea rows="3" cols="20" path="description"/>

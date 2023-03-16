@@ -3,16 +3,16 @@
 <html>
 <head>
     <title>Home</title>
+    <link href="<c:url value="/style.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
     <h1>All Photos</h1>
-    <a href="<c:url value="/upload"/>">Upload Photos</a>
-    <br>
-    <a href="<c:url value="/signup"/>">Sign up</a>
-    <br>
-    <a href="<c:url value="/login"/>">Log in</a>
-    <br>
+    <a id="btn" style="right: 110px" href="<c:url value="/blog/upload"/>">Upload Photos</a>
+    <a id="btn" style="right: 50px" href="<c:url value="/signup"/>">Sign up</a>
+    <a id="btn" style="right: 0" href="<c:url value="/login"/>">Log in</a>
     <c:if test="${!empty username}">
+        <a id="btn" style="right: 210px" href="<c:url value="/myprofile"/>">My Profile</a>
+        <br>
         <h2>Welcome! ${username}</h2>
     </c:if>
     <br>

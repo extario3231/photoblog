@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Photo Details</title>
+    <link href="<c:url value="/style.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
     <h2>Uploaded by ${user.name} ${photo.uploadTime}</h2><br>
@@ -13,7 +14,7 @@
         ${comment}
     </c:forEach>
     <br>
-    <form:form method="POST" modelAttribute="commentForm">
+    <form:form method="POST" cssStyle="text-align: center" modelAttribute="commentForm">
         <form:label path="comment">Write a comment</form:label>
         <form:input type="text" path="comment"/>
         <button>Comment</button>
