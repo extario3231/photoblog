@@ -1,13 +1,29 @@
 package hkmu.comps380f.photoblog.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
 public class Photo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private byte[] content;
     private String description;
     private String uploader;
     private String uploadTime;
-    private List<String> comments;
+    @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public byte[] getContent() {
         return content;
@@ -41,13 +57,13 @@ public class Photo {
         this.uploadTime = uploadTime;
     }
 
-    public List<String> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<String> comments) {
-        this.comments = comments;
-    }
+//    public List<String> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(List<String> comments) {
+//        this.comments = comments;
+//    }
 }
 
 
