@@ -57,13 +57,13 @@ public class Photo {
         this.uploadTime = uploadTime;
     }
 
-//    public List<String> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<String> comments) {
-//        this.comments = comments;
-//    }
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }
 
 
