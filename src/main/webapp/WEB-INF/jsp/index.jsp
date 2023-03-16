@@ -5,8 +5,17 @@
     <title>Home</title>
 </head>
 <body>
-    <h2>All Photos</h2>
-    <a href="<c:url value="/blog/upload"/>">Upload Photos</a>
+    <h1>All Photos</h1>
+    <a href="<c:url value="/upload"/>">Upload Photos</a>
+    <br>
+    <a href="<c:url value="/signup"/>">Sign up</a>
+    <br>
+    <a href="<c:url value="/login"/>">Log in</a>
+    <br>
+    <c:if test="${!empty username}">
+        <h2>Welcome! ${username}</h2>
+    </c:if>
+    <br>
     <table>
         <c:forEach var="photo" items="${photos}">
             <tr>
