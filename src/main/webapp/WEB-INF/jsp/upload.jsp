@@ -10,9 +10,9 @@
     <form:form method="POST"  enctype="multipart/form-data" modelAttribute="uploadForm">
         <form:label path="description">Description</form:label>
         <br>
-        <form:input type="text" path="description"/>
+        <form:textarea rows="3" cols="20" path="description"/>
         <br>
-        <input type="file" name="photos" multiple="multiple">
+        <input type="file" name="photos" multiple>
         <br>
         <button>Upload</button>
     </form:form>

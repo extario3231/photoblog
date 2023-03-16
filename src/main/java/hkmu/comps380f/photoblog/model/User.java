@@ -2,9 +2,6 @@ package hkmu.comps380f.photoblog.model;
 
 import jakarta.persistence.*;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 @Entity
 @Table(name = "users")
 public class User {

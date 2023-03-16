@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
 
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -25,5 +25,9 @@ public class UserService {
 
     public User findByName(Long id) {
         return userRepo.findById(id).orElseThrow(NoSuchElementException::new);
+    }
+
+    public void save(User user) {
+        userRepo.save(user);
     }
 }

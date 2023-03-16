@@ -6,13 +6,15 @@
 </head>
 <body>
     <h2>All Photos</h2>
-
-    <c:forEach var="photo" items="${photos}">
-        <table>
+    <a href="<c:url value="/blog/upload"/>">Upload Photos</a>
+    <table>
+        <c:forEach var="photo" items="${photos}">
             <tr>
-                <td>${photo.content}</td>
+                <td>
+                    ${photo.content}
+                </td>
             </tr>
-        </table>
-    </c:forEach>
+        </c:forEach>
+    </table>
 </body>
 </html>

@@ -3,7 +3,6 @@ package hkmu.comps380f.photoblog.controller;
 import hkmu.comps380f.photoblog.model.Photo;
 import hkmu.comps380f.photoblog.model.UploadForm;
 import hkmu.comps380f.photoblog.service.PhotoService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +13,15 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/blog")
 public class BlogController {
-    private PhotoService photoService;
+    private final PhotoService photoService;
 
     public BlogController(PhotoService photoService) {
         this.photoService = photoService;
@@ -31,10 +34,15 @@ public class BlogController {
 
     @PostMapping("/upload")
     public View upload(UploadForm form) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm:ss");
+        LocalDateTime uploadTime = Instant.now().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        String uploadTimeStr = uploadTime.format(formatter);
+
         for (MultipartFile photo : form.getPhotos()) {
             Photo photoObj = new Photo();
             photoObj.setDescription(form.getDescription());
             photoObj.setUploader("user");
+            photoObj.setUploadTime(uploadTimeStr);
 
             try {
                 byte[] content = photo.getBytes();

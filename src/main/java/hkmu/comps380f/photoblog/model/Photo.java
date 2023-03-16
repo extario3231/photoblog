@@ -9,7 +9,7 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Lob
     private byte[] content;
     private String description;
     private String uploader;

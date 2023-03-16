@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class PhotoService {
-    private PhotoRepo photoRepo;
+    private final PhotoRepo photoRepo;
 
     public PhotoService(PhotoRepo photoRepo) {
         this.photoRepo = photoRepo;
