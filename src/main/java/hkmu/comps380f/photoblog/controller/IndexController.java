@@ -19,7 +19,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(ModelMap modelMap, HttpSession session) {
-        List<Photo> allPhotos = photoService.findAll();
+        List<String> allPhotos = photoService.findAll().stream().map(Photo::getContent).toList();
         modelMap.addAttribute("photos", allPhotos);
         modelMap.addAttribute("username", session.getAttribute("username"));
         return "index";
