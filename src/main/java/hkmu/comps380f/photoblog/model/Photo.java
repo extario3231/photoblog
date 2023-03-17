@@ -10,7 +10,7 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Lob
-    private byte[] content;
+    private String content;
     private String description;
     private String uploader;
     private String uploadTime;
@@ -25,11 +25,11 @@ public class Photo {
         this.id = id;
     }
 
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(byte[] content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
