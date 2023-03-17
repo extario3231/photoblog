@@ -1,10 +1,13 @@
 package hkmu.comps380f.photoblog.controller;
 
 import hkmu.comps380f.photoblog.model.Photo;
+import hkmu.comps380f.photoblog.model.dto.CommentDto;
 import hkmu.comps380f.photoblog.model.dto.PhotoDto;
 import hkmu.comps380f.photoblog.service.PhotoService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +20,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/blog")
@@ -47,7 +51,7 @@ public class BlogController {
             try {
                 byte[] content = photo.getBytes();
                 if (content.length == 0) return new RedirectView("/upload", true);
-                photoObj.setContent(content);
+                photoObj.setContent(Base64.getEncoder().encodeToString(content));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -56,5 +60,11 @@ public class BlogController {
         }
 
         return new RedirectView("/", true);
+    }
+
+    @GetMapping("/photo/{id}")
+    public ModelAndView viewPhoto(@PathVariable Long id, ModelMap modelMap) {
+        modelMap.addAttribute("photo", photoService.findById(id));
+        return new ModelAndView("photo", "commentForm", new CommentDto());
     }
 }
