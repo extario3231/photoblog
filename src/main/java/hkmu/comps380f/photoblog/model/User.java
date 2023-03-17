@@ -2,6 +2,8 @@ package hkmu.comps380f.photoblog.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -14,7 +16,9 @@ public class User {
     private String password;
     private String email;
     private String description;
-    private boolean isAdmin;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Photo> photos;
+    private UserRole userRole;
 
     public Long getId() {
         return id;
@@ -64,11 +68,19 @@ public class User {
         this.description = description;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public List<Photo> getPhotos() {
+        return photos;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRoles) {
+        this.userRole = userRoles;
     }
 }
