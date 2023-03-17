@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,9 +17,10 @@
     <p>Description: ${description}</p>
     <br>
     <h2>Photos:</h2>
-    <br>
+    <hr>
     <c:forEach var="photo" items="${photos}">
         <img src="data:image/jpg;base64, ${photo}">
+        <br>
     </c:forEach>
 </body>
 </html>
