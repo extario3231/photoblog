@@ -16,7 +16,7 @@ public class User {
     private String password;
     private String email;
     private String description;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Photo> photos;
     private UserRole userRole;
 

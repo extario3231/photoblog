@@ -19,7 +19,7 @@
     <h2>Photos:</h2>
     <hr>
     <c:forEach var="photo" items="${photos}">
-        <img src="data:image/jpg;base64, ${photo}">
+        <img src="data:image/jpg;base64, ${photo.content}">
         <br>
     </c:forEach>
 </body>

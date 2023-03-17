@@ -6,6 +6,7 @@ import hkmu.comps380f.photoblog.model.dto.CommentDto;
 import hkmu.comps380f.photoblog.model.dto.PhotoDto;
 import hkmu.comps380f.photoblog.service.CommentService;
 import hkmu.comps380f.photoblog.service.PhotoService;
+import hkmu.comps380f.photoblog.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,10 +31,12 @@ import java.util.Base64;
 public class BlogController {
     private final PhotoService photoService;
     private final CommentService commentService;
+    private final UserService userService;
 
-    public BlogController(PhotoService photoService, CommentService commentService) {
+    public BlogController(PhotoService photoService, CommentService commentService, UserService userService) {
         this.photoService = photoService;
         this.commentService = commentService;
+        this.userService = userService;
     }
 
     @GetMapping("/upload")
@@ -49,9 +52,6 @@ public class BlogController {
 
         for (MultipartFile photo : dto.getPhotos()) {
             Photo photoObj = new Photo();
-            photoObj.setDescription(dto.getDescription());
-            photoObj.setUploader((String) session.getAttribute("username"));
-            photoObj.setUploadTime(uploadTimeStr);
 
             try {
                 byte[] content = photo.getBytes();
@@ -61,6 +61,10 @@ public class BlogController {
                 throw new RuntimeException(e);
             }
 
+            photoObj.setDescription(dto.getDescription());
+            photoObj.setUploader((String) session.getAttribute("username"));
+            photoObj.setUploadTime(uploadTimeStr);
+            photoObj.setUser(userService.findByName((String) session.getAttribute("username")));
             photoService.save(photoObj);
         }
 

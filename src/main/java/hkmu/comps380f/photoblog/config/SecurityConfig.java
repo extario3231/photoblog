@@ -14,20 +14,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/myprofile").permitAll()
-                .requestMatchers(HttpMethod.GET).permitAll()
-                .requestMatchers(HttpMethod.POST).permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .and()
-                .csrf()
+//                .authorizeHttpRequests()
+//                .requestMatchers(HttpMethod.GET, "/myprofile").permitAll()
+//                .requestMatchers(HttpMethod.GET).permitAll()
+//                .requestMatchers(HttpMethod.POST).permitAll()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login").permitAll()
+//                .and()
+//                .csrf()
+                .httpBasic()
                 .and().build();
     }
 
-    @Bean
-    public static BCryptPasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    // Maybe for later use
+//    @Bean
+//    public static BCryptPasswordEncoder getPasswordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 }
