@@ -14,6 +14,9 @@ public class Photo {
     private String description;
     private String uploader;
     private String uploadTime;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user.id")
+    private User user;
     @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
@@ -55,6 +58,14 @@ public class Photo {
 
     public void setUploadTime(String uploadTime) {
         this.uploadTime = uploadTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Comment> getComments() {
