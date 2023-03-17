@@ -13,14 +13,14 @@
     <c:if test="${!empty username}">
         <a id="btn" style="right: 210px" href="<c:url value="/myprofile"/>">My Profile</a>
         <br>
-        <h2>Welcome! ${username}</h2>
+        <h2>Welcome, ${username}</h2>
     </c:if>
     <br>
     <table>
-        <c:forEach var="photo" items="${photos}">
+        <c:forEach var="photo" items="${photos}" varStatus="status">
             <tr>
                 <td>
-                    ${photo.content}
+                    <a href="<c:url value="/blog/photo/${status.count}"/>"><img src="data:image/jpg;base64, ${photo}" alt="${status.count}"></a>
                 </td>
             </tr>
         </c:forEach>
