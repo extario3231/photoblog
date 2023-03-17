@@ -10,8 +10,12 @@
     <img src="data:image/jpg;base64, ${photo.content}" style="display: block; margin-left: auto; margin-right: auto"><br>
 
     <h2>Comments</h2>
-    <c:forEach var="comment" items="${photo.comments}">
-        ${comment}
+    <hr>
+    <c:forEach var="comment" items="${photo.comments}" varStatus="status">
+        <p style="text-align: center">${comment.comment}</p>
+        <c:if test="${!status.last}">
+            <hr>
+        </c:if>
     </c:forEach>
     <br>
     <form:form method="POST" modelAttribute="commentForm">
