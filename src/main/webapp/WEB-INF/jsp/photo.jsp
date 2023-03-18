@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,9 +22,20 @@
     <form:form method="POST" modelAttribute="commentForm">
         <form:label path="comment">Write a comment</form:label>
         <br>
-        <form:textarea rows="3" cols="20" path="comment"/>
-        <br>
-        <button>Comment</button>
+        <c:choose>
+            <c:when test="${empty username}">
+                <label>
+                    <textarea rows="3" cols="20" disabled>Log in to comment</textarea>
+                </label>
+                <br>
+                <button disabled>Comment</button>
+            </c:when>
+            <c:otherwise>
+                <form:textarea rows="3" cols="20" path="comment"/>
+                <br>
+                <button>Comment</button>
+            </c:otherwise>
+        </c:choose>
     </form:form>
 </body>
 </html>

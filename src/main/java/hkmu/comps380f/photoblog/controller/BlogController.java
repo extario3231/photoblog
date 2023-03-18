@@ -72,13 +72,14 @@ public class BlogController {
     }
 
     @GetMapping("/photo/{id}")
-    public ModelAndView viewPhoto(@PathVariable Long id, ModelMap modelMap) {
+    public ModelAndView viewPhoto(@PathVariable Long id, ModelMap modelMap, HttpSession session) {
         modelMap.addAttribute("photo", photoService.findById(id));
+        modelMap.addAttribute("username", session.getAttribute("username"));
         return new ModelAndView("photo", "commentForm", new CommentDto());
     }
 
     @PostMapping("/photo/{id}")
-    public View addComment(@PathVariable Long id, HttpSession session, ModelMap modelMap, CommentDto dto) {
+    public View addComment(@PathVariable Long id, ModelMap modelMap, CommentDto dto) {
         Photo photo = photoService.findById(id);
         Comment newComment = new Comment();
         newComment.setComment(dto.getComment());
