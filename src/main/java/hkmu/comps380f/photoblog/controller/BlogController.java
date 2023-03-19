@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.List;
 
 @Controller
 @RequestMapping("/blog")
@@ -37,6 +38,14 @@ public class BlogController {
         this.photoService = photoService;
         this.commentService = commentService;
         this.userService = userService;
+    }
+
+    @GetMapping("/")
+    public String index(ModelMap modelMap, HttpSession session) {
+        List<String> allPhotos = photoService.findAll().stream().map(Photo::getContent).toList();
+        modelMap.addAttribute("photos", allPhotos);
+        modelMap.addAttribute("username", session.getAttribute("username"));
+        return "index";
     }
 
     @GetMapping("/upload")
