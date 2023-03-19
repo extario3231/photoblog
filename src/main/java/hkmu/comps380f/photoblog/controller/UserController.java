@@ -3,6 +3,7 @@ package hkmu.comps380f.photoblog.controller;
 import hkmu.comps380f.photoblog.model.User;
 import hkmu.comps380f.photoblog.model.dto.UserDto;
 import hkmu.comps380f.photoblog.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,7 +30,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public View signup(UserDto userDto, HttpSession session) {
-        userService.save(userDto);
+        userService.saveNewUser(userDto);
         session.setAttribute("username", userDto.getUsername());
         return new RedirectView("/", true);
     }
@@ -49,12 +50,29 @@ public class UserController {
         return new RedirectView("/", true);
     }
 
-    @GetMapping("/myprofile")
+    @GetMapping("/profile")
     public String viewProfile(ModelMap modelMap, HttpSession session) {
         String username = (String) session.getAttribute("username");
-        modelMap.addAttribute("username", userService.findByName(username).getName());
+        modelMap.addAttribute("username", username);
         modelMap.addAttribute("description", session.getAttribute("description"));
         modelMap.addAttribute("photos", userService.findByName(username).getPhotos());
         return "profile";
+    }
+
+    @GetMapping("/profile/edit")
+    public String viewEditProfile(HttpSession session, ModelMap modelMap) {
+        modelMap.addAttribute("username", session.getAttribute("username"));
+        modelMap.addAttribute("description", session.getAttribute("description"));
+        return "profileEdit";
+    }
+
+    @PostMapping("/profile/edit")
+    public String editProfile(HttpSession session, HttpServletRequest request) {
+        String description = request.getParameterValues("description")[0];
+        session.setAttribute("description", description);
+        User user = userService.findByName((String) session.getAttribute("username"));
+        user.setDescription(description);
+        userService.save(user);
+        return "redirect:/profile";
     }
 }
