@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${username}'s Profile</title>
+    <title>My Profile</title>
     <link href="<c:url value="/style.css"/>" rel="stylesheet" type="text/css">
     <style>
         p {
@@ -10,11 +10,12 @@
     </style>
 </head>
 <body>
-    <h1>${username}'s Profile</h1>
+    <h1>My Profile</h1>
     <br>
     <p>Name: ${username}</p>
     <br>
     <p>Description: ${description}</p>
+    <a id="btn" href="/profile/edit">Edit</a>
     <br>
     <h2>Photos:</h2>
     <hr>
