@@ -31,7 +31,7 @@ public class UserService {
         return userRepo.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
-    public void save(UserDto dto) {
+    public void saveNewUser(UserDto dto) {
         User newUser = new User();
         newUser.setName(dto.getUsername());
         newUser.setPassword(dto.getPassword());
@@ -39,5 +39,9 @@ public class UserService {
         newUser.setPhoneNumber(dto.getPhoneNumber());
         newUser.setUserRole(UserRole.USER);
         userRepo.save(newUser);
+    }
+
+    public void save(User user) {
+        userRepo.save(user);
     }
 }
