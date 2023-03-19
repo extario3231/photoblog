@@ -10,10 +10,10 @@
     <a id="btn" style="right: 50px" href="<c:url value="/signup"/>">Sign up</a>
     <a id="btn" style="right: 0" href="<c:url value="/login"/>">Log in</a>
     <c:if test="${!empty username}">
-        <a id="btn" style="right: 110px" href="<c:url value="/blog/upload"/>">Upload Photos</a>
-        <a id="btn" style="right: 210px" href="<c:url value="/myprofile"/>">My Profile</a>
+        <a id="btn" style="right: 105px" href="<c:url value="/blog/upload"/>">Upload Photos</a>
+        <a id="btn" style="right: 205px" href="<c:url value="/profile"/>">My Profile</a>
         <br>
-        <h2>Welcome, ${username}</h2>
+        <p style="top: 0; position: absolute; margin: unset; right: 280px;">Welcome, ${username}</p>
     </c:if>
     <br>
     <table>
