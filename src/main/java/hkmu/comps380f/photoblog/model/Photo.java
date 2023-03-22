@@ -1,8 +1,15 @@
 package hkmu.comps380f.photoblog.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static jakarta.persistence.CascadeType.*;
 
 @Entity
 public class Photo {
@@ -13,11 +20,14 @@ public class Photo {
     private String content;
     private String description;
     private String uploader;
-    private String uploadTime;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime uploadTime;
+    @ManyToOne(cascade = {MERGE, PERSIST, REFRESH, DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user.id")
     private User user;
-    @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 20)
     private List<Comment> comments;
 
     public Long getId() {
@@ -52,11 +62,16 @@ public class Photo {
         this.uploader = uploader;
     }
 
-    public String getUploadTime() {
+    public LocalDateTime getUploadTime() {
         return uploadTime;
     }
 
-    public void setUploadTime(String uploadTime) {
+    public String getUploadTimeString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm:ss");
+        return uploadTime.format(formatter);
+    }
+
+    public void setUploadTime(LocalDateTime uploadTime) {
         this.uploadTime = uploadTime;
     }
 
