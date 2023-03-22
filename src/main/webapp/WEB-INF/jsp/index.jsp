@@ -10,17 +10,19 @@
     <a id="btn" style="right: 3rem" href="<c:url value="/signup"/>">Sign up</a>
     <a id="btn" style="right: 0" href="<c:url value="/login"/>">Log in</a>
     <c:if test="${!empty username}">
-        <a id="btn" style="right: 6.4rem" href="<c:url value="/blog/upload"/>">Upload Photos</a>
+        <a id="btn" style="right: 6.4rem" href="<c:url value="/upload"/>">Upload Photos</a>
         <a id="btn" style="right: 12.6rem" href="<c:url value="/profile"/>">My Profile</a>
         <br>
         <p style="top: 0; position: absolute; margin: unset; right: 17.6rem;">Welcome, ${username}</p>
     </c:if>
     <br>
     <table>
-        <c:forEach var="photo" items="${photos}" varStatus="status">
+        <c:forEach var="photo" items="${photos}">
             <tr>
                 <td>
-                    <a href="<c:url value="/blog/photo/${status.count}"/>"><img src="data:image/jpg;base64, ${photo}" alt="${status.count}"></a>
+                    <a href="<c:url value="/photo/${photo.id}"/>">
+                        <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.id}" height="300" width="450">
+                    </a>
                 </td>
             </tr>
         </c:forEach>
