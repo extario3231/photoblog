@@ -1,6 +1,9 @@
 package hkmu.comps380f.photoblog.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -11,14 +14,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String username;
     private String phoneNumber;
     private String password;
     private String email;
     private String description;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 20)
     private List<Photo> photos;
-    private UserRole userRole;
+    @Enumerated(EnumType.STRING)
+    private List<UserRole> userRoles;
 
     public Long getId() {
         return id;
@@ -28,12 +34,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     public String getPhoneNumber() {
@@ -76,11 +82,11 @@ public class User {
         this.photos = photos;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public List<UserRole> getUserRoles() {
+        return userRoles;
     }
 
-    public void setUserRole(UserRole userRoles) {
-        this.userRole = userRoles;
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 }
