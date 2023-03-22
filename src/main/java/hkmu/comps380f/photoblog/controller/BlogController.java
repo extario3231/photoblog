@@ -13,22 +13,19 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.List;
 
 @Controller
-@RequestMapping("/blog")
 public class BlogController {
     private final PhotoService photoService;
     private final CommentService commentService;
@@ -42,39 +39,37 @@ public class BlogController {
 
     @GetMapping("/")
     public String index(ModelMap modelMap, HttpSession session) {
-        List<String> allPhotos = photoService.findAll().stream().map(Photo::getContent).toList();
+        List<Photo> allPhotos = photoService.findAll();
         modelMap.addAttribute("photos", allPhotos);
         modelMap.addAttribute("username", session.getAttribute("username"));
         return "index";
     }
 
     @GetMapping("/upload")
-    public ModelAndView uploadNewPhoto() {
+    public ModelAndView viewUploadPhotoPage() {
         return new ModelAndView("upload", "uploadForm", new PhotoDto());
     }
 
     @PostMapping("/upload")
     public View upload(PhotoDto dto, HttpSession session) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm:ss");
-        LocalDateTime uploadTime = Instant.now().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        String uploadTimeStr = uploadTime.format(formatter);
+        LocalDateTime uploadTime = LocalDateTime.now(ZoneId.systemDefault()).truncatedTo(ChronoUnit.SECONDS);
 
         for (MultipartFile photo : dto.getPhotos()) {
-            Photo photoObj = new Photo();
+            Photo newPhoto = new Photo();
 
             try {
                 byte[] content = photo.getBytes();
                 if (content.length == 0) return new RedirectView("/upload", true);
-                photoObj.setContent(Base64.getEncoder().encodeToString(content));
+                newPhoto.setContent(Base64.getEncoder().encodeToString(content));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            photoObj.setDescription(dto.getDescription());
-            photoObj.setUploader((String) session.getAttribute("username"));
-            photoObj.setUploadTime(uploadTimeStr);
-            photoObj.setUser(userService.findByName((String) session.getAttribute("username")));
-            photoService.save(photoObj);
+            newPhoto.setDescription(dto.getDescription());
+            newPhoto.setUploader((String) session.getAttribute("username"));
+            newPhoto.setUploadTime(uploadTime);
+            newPhoto.setUser(userService.findByUsername((String) session.getAttribute("username")));
+            photoService.save(newPhoto);
         }
 
         return new RedirectView("/", true);
@@ -82,8 +77,10 @@ public class BlogController {
 
     @GetMapping("/photo/{id}")
     public ModelAndView viewPhoto(@PathVariable Long id, ModelMap modelMap, HttpSession session) {
-        modelMap.addAttribute("photo", photoService.findById(id));
+        Photo photo = photoService.findById(id);
+        modelMap.addAttribute("photo", photo);
         modelMap.addAttribute("username", session.getAttribute("username"));
+        modelMap.addAttribute("userRoles", session.getAttribute("userRoles"));
         return new ModelAndView("photo", "commentForm", new CommentDto());
     }
 
@@ -96,6 +93,12 @@ public class BlogController {
         commentService.save(newComment);
         modelMap.addAttribute("photo", photo);
 
-        return new RedirectView("/blog/photo/"+id, true);
+        return new RedirectView("/photo/"+id, true);
+    }
+
+    @PostMapping("/photo/delete/{id}")
+    public String deletePhoto(@PathVariable Long id) {
+        photoService.deleteById(id);
+        return "redirect:/";
     }
 }
