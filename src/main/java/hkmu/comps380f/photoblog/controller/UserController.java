@@ -16,38 +16,27 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class UserController {
     private final UserService userService;
-//    private final BCryptPasswordEncoder encoder;
 
     public UserController(UserService userService) {
         this.userService = userService;
-//        this.encoder = getPasswordEncoder();
     }
 
     @GetMapping("/signup")
-    public ModelAndView signup() {
+    public ModelAndView viewSignupPage() {
         return new ModelAndView("signup", "signupForm", new UserDto());
     }
 
     @PostMapping("/signup")
     public View signup(UserDto userDto, HttpSession session) {
-        userService.saveNewUser(userDto);
+        User newUser = userService.saveNewUser(userDto);
         session.setAttribute("username", userDto.getUsername());
+        session.setAttribute("userRoles", newUser.getUserRoles());
         return new RedirectView("/", true);
     }
 
     @GetMapping("/login")
-    public ModelAndView login() {
+    public ModelAndView viewLoginPage() {
         return new ModelAndView("login", "loginForm", new UserDto());
-    }
-
-    @PostMapping("/login")
-    public View login(UserDto dto, HttpSession session) {
-        User user = userService.findByName(dto.getUsername());
-        if (user == null || !user.getPassword().equals(dto.getPassword()))
-            return new RedirectView("/login", true);
-        session.setAttribute("username", user.getName());
-        session.setAttribute("description", user.getDescription());
-        return new RedirectView("/", true);
     }
 
     @GetMapping("/profile")
@@ -55,12 +44,12 @@ public class UserController {
         String username = (String) session.getAttribute("username");
         modelMap.addAttribute("username", username);
         modelMap.addAttribute("description", session.getAttribute("description"));
-        modelMap.addAttribute("photos", userService.findByName(username).getPhotos());
+        modelMap.addAttribute("photos", userService.findByUsername(username).getPhotos());
         return "profile";
     }
 
     @GetMapping("/profile/edit")
-    public String viewEditProfile(HttpSession session, ModelMap modelMap) {
+    public String viewEditProfilePage(HttpSession session, ModelMap modelMap) {
         modelMap.addAttribute("username", session.getAttribute("username"));
         modelMap.addAttribute("description", session.getAttribute("description"));
         return "profileEdit";
@@ -70,7 +59,7 @@ public class UserController {
     public String editProfile(HttpSession session, HttpServletRequest request) {
         String description = request.getParameterValues("description")[0];
         session.setAttribute("description", description);
-        User user = userService.findByName((String) session.getAttribute("username"));
+        User user = userService.findByUsername((String) session.getAttribute("username"));
         user.setDescription(description);
         userService.save(user);
         return "redirect:/profile";
