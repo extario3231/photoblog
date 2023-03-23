@@ -2,6 +2,7 @@ package hkmu.comps380f.photoblog.controller;
 
 import hkmu.comps380f.photoblog.model.Comment;
 import hkmu.comps380f.photoblog.model.Photo;
+import hkmu.comps380f.photoblog.model.User;
 import hkmu.comps380f.photoblog.model.dto.CommentDto;
 import hkmu.comps380f.photoblog.model.dto.PhotoDto;
 import hkmu.comps380f.photoblog.service.CommentService;
@@ -100,5 +101,18 @@ public class BlogController {
     public String deletePhoto(@PathVariable Long id) {
         photoService.deleteById(id);
         return "redirect:/";
+    }
+
+    @PostMapping("/photo/{photoId}/comment/delete/{commentId}")
+    public String deleteComment(@PathVariable Long photoId, @PathVariable Long commentId) {
+        commentService.deleteById(commentId);
+        return "redirect:/photo/"+photoId;
+    }
+
+    @GetMapping("/manage")
+    public String manage(ModelMap modelMap) {
+        List<User> allUsers = userService.findAll();
+        modelMap.addAttribute("users", allUsers);
+        return "manage";
     }
 }
