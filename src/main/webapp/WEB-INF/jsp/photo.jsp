@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +12,11 @@
     <h2>Uploaded by ${photo.uploader} on ${photo.uploadTimeString}</h2><br>
     <img src="data:image/jpg;base64, ${photo.content}" style="display: block; margin-left: auto; margin-right: auto"><br>
 
-    <c:if test="${fn:contains(userRoles, 'ADMIN')}">
+    <security:authorize access="hasRole('ADMIN')">
         <form method="post" action="/photo/delete/${photo.id}">
             <button id="btn" style="right: 0;">Delete</button>
         </form>
-    </c:if>
+    </security:authorize>
 
     <h2>Comments</h2>
     <hr>
