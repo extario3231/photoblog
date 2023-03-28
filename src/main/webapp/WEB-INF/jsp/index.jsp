@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,14 +8,17 @@
 </head>
 <body>
     <h1>All Photos</h1>
-    <a id="btn" style="right: 3rem" href="<c:url value="/signup"/>">Sign up</a>
-    <a id="btn" style="right: 0" href="<c:url value="/login"/>">Log in</a>
-    <c:if test="${!empty username}">
-        <a id="btn" style="right: 6.4rem" href="<c:url value="/upload"/>">Upload Photos</a>
-        <a id="btn" style="right: 12.6rem" href="<c:url value="/profile"/>">My Profile</a>
-        <br>
-        <p style="top: 0; position: absolute; margin: unset; right: 17.6rem;">Welcome, ${username}</p>
-    </c:if>
+    <c:choose>
+        <c:when test="${!empty username}">
+            <a id="btn" style="right: 0" href="<c:url value="/upload"/>">Upload Photos</a>
+            <a id="btn" style="right: 6.2rem" href="<c:url value="/profile"/>">My Profile</a>
+            <p style="top: 0; position: absolute; margin: unset; right: 11rem;">Welcome, ${username}</p>
+        </c:when>
+        <c:otherwise>
+        <a id="btn" style="right: 3rem" href="<c:url value="/signup"/>">Sign up</a>
+        <a id="btn" style="right: 0" href="<c:url value="/login"/>">Log in</a>
+        </c:otherwise>
+    </c:choose>
     <br>
     <table>
         <c:forEach var="photo" items="${photos}">
