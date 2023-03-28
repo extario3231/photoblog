@@ -39,6 +39,13 @@ public class SecurityConfig {
                         .permitAll()
                         .successHandler(new AuthSuccessHandler())
                 )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .permitAll()
+                        .logoutSuccessUrl("/")
+                )
                 .authenticationProvider(authenticationProvider())
                 .csrf().disable()
                 .build();
