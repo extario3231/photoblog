@@ -17,7 +17,6 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         if (authentication.isAuthenticated()) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             request.getSession().setAttribute("username", userDetails.getUsername());
-            request.getSession().setAttribute("userRoles", userDetails.getAuthorities());
             response.sendRedirect("/");
         }
     }
