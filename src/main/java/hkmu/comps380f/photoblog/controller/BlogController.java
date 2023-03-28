@@ -1,8 +1,8 @@
 package hkmu.comps380f.photoblog.controller;
 
+import hkmu.comps380f.photoblog.model.BlogUser;
 import hkmu.comps380f.photoblog.model.Comment;
 import hkmu.comps380f.photoblog.model.Photo;
-import hkmu.comps380f.photoblog.model.User;
 import hkmu.comps380f.photoblog.model.dto.CommentDto;
 import hkmu.comps380f.photoblog.model.dto.PhotoDto;
 import hkmu.comps380f.photoblog.service.CommentService;
@@ -81,7 +81,6 @@ public class BlogController {
         Photo photo = photoService.findById(id);
         modelMap.addAttribute("photo", photo);
         modelMap.addAttribute("username", session.getAttribute("username"));
-        modelMap.addAttribute("userRoles", session.getAttribute("userRoles"));
         return new ModelAndView("photo", "commentForm", new CommentDto());
     }
 
@@ -111,8 +110,8 @@ public class BlogController {
 
     @GetMapping("/manage")
     public String manage(ModelMap modelMap) {
-        List<User> allUsers = userService.findAll();
-        modelMap.addAttribute("users", allUsers);
+        List<BlogUser> allBlogUsers = userService.findAll();
+        modelMap.addAttribute("users", allBlogUsers);
         return "manage";
     }
 }
