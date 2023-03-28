@@ -24,7 +24,7 @@ public class Photo {
     private LocalDateTime uploadTime;
     @ManyToOne(cascade = {MERGE, PERSIST, REFRESH, DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user.id")
-    private User user;
+    private BlogUser user;
     @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 20)
@@ -75,12 +75,12 @@ public class Photo {
         this.uploadTime = uploadTime;
     }
 
-    public User getUser() {
+    public BlogUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(BlogUser blogUser) {
+        this.user = blogUser;
     }
 
     public List<Comment> getComments() {
