@@ -1,6 +1,6 @@
 package hkmu.comps380f.photoblog.controller;
 
-import hkmu.comps380f.photoblog.model.User;
+import hkmu.comps380f.photoblog.model.BlogUser;
 import hkmu.comps380f.photoblog.model.dto.UserDto;
 import hkmu.comps380f.photoblog.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,9 +29,8 @@ public class UserController {
 
     @PostMapping("/signup")
     public View signup(UserDto userDto, HttpSession session) {
-        User newUser = userService.saveNewUser(userDto);
+        userService.saveNewUser(userDto);
         session.setAttribute("username", userDto.getUsername());
-        session.setAttribute("userRoles", newUser.getUserRoles());
         return new RedirectView("/", true);
     }
 
@@ -60,9 +59,9 @@ public class UserController {
     public String editProfile(HttpSession session, HttpServletRequest request) {
         String description = request.getParameterValues("description")[0];
         session.setAttribute("description", description);
-        User user = userService.findByUsername((String) session.getAttribute("username"));
-        user.setDescription(description);
-        userService.save(user);
+        BlogUser blogUser = userService.findByUsername((String) session.getAttribute("username"));
+        blogUser.setDescription(description);
+        userService.save(blogUser);
         return "redirect:/profile";
     }
 
