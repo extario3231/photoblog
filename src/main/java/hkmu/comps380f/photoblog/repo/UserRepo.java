@@ -1,13 +1,11 @@
 package hkmu.comps380f.photoblog.repo;
 
-import hkmu.comps380f.photoblog.model.User;
+import hkmu.comps380f.photoblog.model.BlogUser;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
-public interface UserRepo extends JpaRepository<User, Long> {
-    Optional<User> findByUsername(String username);
+public interface UserRepo extends JpaRepository<BlogUser, Long> {
+    Optional<BlogUser> findByUsername(String username);
     void deleteByUsername(String name);
 }
