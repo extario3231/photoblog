@@ -2,9 +2,14 @@ package hkmu.comps380f.photoblog.controller;
 
 import hkmu.comps380f.photoblog.model.BlogUser;
 import hkmu.comps380f.photoblog.model.dto.UserDto;
+import hkmu.comps380f.photoblog.service.BlogUserDetailsService;
 import hkmu.comps380f.photoblog.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +19,16 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
+
 @Controller
 public class UserController {
     private final UserService userService;
+    private final BlogUserDetailsService userDetailsService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, BlogUserDetailsService userDetailsService) {
         this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("/signup")
@@ -28,9 +37,18 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public View signup(UserDto userDto, HttpSession session) {
-        userService.saveNewUser(userDto);
+    public View signup(UserDto userDto, HttpServletRequest request) {
+        BlogUser newUser = userService.saveNewUser(userDto);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(newUser.getUsername());
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(token);
+
+        HttpSession session = request.getSession(true);
         session.setAttribute("username", userDto.getUsername());
+        session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, context);
+
         return new RedirectView("/", true);
     }
 
