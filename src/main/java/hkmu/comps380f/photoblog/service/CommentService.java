@@ -3,6 +3,7 @@ package hkmu.comps380f.photoblog.service;
 import hkmu.comps380f.photoblog.model.Comment;
 import hkmu.comps380f.photoblog.repo.CommentRepo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class CommentService {
         return commentRepo.findAll();
     }
 
+    @Transactional
     public void save(Comment comment) {
         commentRepo.save(comment);
     }

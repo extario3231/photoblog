@@ -4,6 +4,7 @@ import hkmu.comps380f.photoblog.exception.PhotoNotFoundException;
 import hkmu.comps380f.photoblog.model.Photo;
 import hkmu.comps380f.photoblog.repo.PhotoRepo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class PhotoService {
         return photoRepo.findById(id).orElseThrow(PhotoNotFoundException::new);
     }
 
+    @Transactional
     public void save(Photo photo) {
         photoRepo.save(photo);
     }
