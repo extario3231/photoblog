@@ -8,11 +8,11 @@
 <body>
     <h2>List of users</h2>
     <div style="text-align: center">
-        <c:forEach var="user" items="${users}">
-                Username: ${user.username}<br>
-                Description: ${user.description}<br>
-                Phone number: ${user.phoneNumber}<br>
-                Email: ${user.email}<br>
+        <c:forEach var="blogUser" items="${users}">
+                Username: ${blogUser.username}<br>
+                Description: ${blogUser.description}<br>
+                Phone number: ${blogUser.phoneNumber}<br>
+                Email: ${blogUser.email}<br>
         </c:forEach>
     </div>
 </body>
