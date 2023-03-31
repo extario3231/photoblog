@@ -13,6 +13,7 @@ public class Comment {
     @ManyToOne(cascade = {MERGE, PERSIST, REFRESH, DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "photo.id")
     private Photo photo;
+    private String username;
 
     public void setId(Long id) {
         this.id = id;
@@ -36,5 +37,13 @@ public class Comment {
 
     public void setPhoto(Photo photo) {
         this.photo = photo;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
