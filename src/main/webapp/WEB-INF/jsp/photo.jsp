@@ -1,6 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
@@ -36,20 +35,18 @@
     <form:form method="POST" modelAttribute="commentForm">
         <form:label path="comment">Write a comment</form:label>
         <br>
-        <c:choose>
-            <c:when test="${empty username}">
-                <label>
-                    <textarea rows="3" cols="20" disabled>Log in to comment</textarea>
-                </label>
-                <br>
-                <button disabled>Comment</button>
-            </c:when>
-            <c:otherwise>
-                <form:textarea rows="3" cols="20" path="comment"/>
-                <br>
-                <button>Comment</button>
-            </c:otherwise>
-        </c:choose>
+        <security:authorize access="isAnonymous()">
+            <label>
+                <textarea rows="3" cols="20" disabled>Log in to comment</textarea>
+            </label>
+            <br>
+            <button disabled>Comment</button>
+        </security:authorize>
+        <security:authorize access="isAuthenticated()">
+            <form:textarea rows="3" cols="20" path="comment"/>
+            <br>
+            <button>Comment</button>
+        </security:authorize>
     </form:form>
 </body>
 </html>
