@@ -12,12 +12,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.security.Principal;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
@@ -58,27 +59,26 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String viewProfile(ModelMap modelMap, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        modelMap.addAttribute("username", username);
-        modelMap.addAttribute("description", session.getAttribute("description"));
-        modelMap.addAttribute("photos", userService.findByUsername(username).getPhotos());
+    public String viewProfile(ModelMap modelMap, Principal user, HttpSession session) {
+        BlogUser blogUser = userService.findByUsername(user.getName());
+        modelMap.addAttribute("description", blogUser.getDescription());
+        session.setAttribute("description", blogUser.getDescription());
+        modelMap.addAttribute("photos", blogUser.getPhotos());
         return "profile";
     }
 
     @GetMapping("/profile/edit")
-    public String viewEditProfilePage(HttpSession session, ModelMap modelMap) {
-        modelMap.addAttribute("username", session.getAttribute("username"));
+    public String viewEditProfilePage(HttpSession session, ModelMap modelMap, Principal user) {
+        modelMap.addAttribute("username", user.getName());
         modelMap.addAttribute("description", session.getAttribute("description"));
         return "profileEdit";
     }
 
     @PostMapping("/profile/edit")
-    public String editProfile(HttpSession session, HttpServletRequest request) {
-        String description = request.getParameterValues("description")[0];
-        session.setAttribute("description", description);
-        BlogUser blogUser = userService.findByUsername((String) session.getAttribute("username"));
-        blogUser.setDescription(description);
+    public String editProfile(@RequestBody MultiValueMap<String, String> description, Principal user) {
+        System.out.println(description);
+        BlogUser blogUser = userService.findByUsername(user.getName());
+        blogUser.setDescription(description.get("description").get(0));
         userService.save(blogUser);
         return "redirect:/profile";
     }

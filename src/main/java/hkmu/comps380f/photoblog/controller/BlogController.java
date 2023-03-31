@@ -20,6 +20,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -39,10 +40,10 @@ public class BlogController {
     }
 
     @GetMapping("/")
-    public String index(ModelMap modelMap, HttpSession session) {
+    public String index(ModelMap modelMap) {
         List<Photo> allPhotos = photoService.findAll();
         modelMap.addAttribute("photos", allPhotos);
-        modelMap.addAttribute("username", session.getAttribute("username"));
+//        modelMap.addAttribute("username", user.getName());
         return "index";
     }
 
@@ -52,7 +53,7 @@ public class BlogController {
     }
 
     @PostMapping("/upload")
-    public View upload(PhotoDto dto, HttpSession session) {
+    public View upload(PhotoDto dto, Principal user) {
         LocalDateTime uploadTime = LocalDateTime.now(ZoneId.systemDefault()).truncatedTo(ChronoUnit.SECONDS);
 
         for (MultipartFile photo : dto.getPhotos()) {
@@ -67,9 +68,9 @@ public class BlogController {
             }
 
             newPhoto.setDescription(dto.getDescription());
-            newPhoto.setUploader((String) session.getAttribute("username"));
+            newPhoto.setUploader(user.getName());
             newPhoto.setUploadTime(uploadTime);
-            newPhoto.setUser(userService.findByUsername((String) session.getAttribute("username")));
+            newPhoto.setUser(userService.findByUsername(user.getName()));
             photoService.save(newPhoto);
         }
 
@@ -77,19 +78,19 @@ public class BlogController {
     }
 
     @GetMapping("/photo/{id}")
-    public ModelAndView viewPhoto(@PathVariable Long id, ModelMap modelMap, HttpSession session) {
+    public ModelAndView viewPhoto(@PathVariable Long id, ModelMap modelMap) {
         Photo photo = photoService.findById(id);
         modelMap.addAttribute("photo", photo);
-        modelMap.addAttribute("username", session.getAttribute("username"));
         return new ModelAndView("photo", "commentForm", new CommentDto());
     }
 
     @PostMapping("/photo/{id}")
-    public View addComment(@PathVariable Long id, ModelMap modelMap, CommentDto dto) {
+    public View addComment(@PathVariable Long id, ModelMap modelMap, CommentDto dto, Principal user) {
         Photo photo = photoService.findById(id);
         Comment newComment = new Comment();
         newComment.setComment(dto.getComment());
         newComment.setPhoto(photo);
+        newComment.setUsername(user.getName());
         commentService.save(newComment);
         modelMap.addAttribute("photo", photo);
 
