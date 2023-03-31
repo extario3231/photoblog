@@ -1,3 +1,4 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,7 @@
 <body>
     <h1>My Profile</h1>
     <br>
-    <p>Name: ${username}</p>
+    <p>Name: <security:authentication property="principal.username"/></p>
     <br>
     <p>Description: ${description}</p>
     <a id="btn" href="/profile/edit">Edit</a>
