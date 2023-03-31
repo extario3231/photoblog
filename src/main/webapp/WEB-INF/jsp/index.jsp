@@ -12,7 +12,7 @@
         <a id="btn" style="right: 0" href="<c:url value="/logout"/>">Log out</a>
         <a id="btn" style="right: 3.5rem" href="<c:url value="/upload"/>">Upload Photos</a>
         <a id="btn" style="right: 9.7rem" href="<c:url value="/profile"/>">My Profile</a>
-        <p style="top: 0; position: absolute; margin: unset; right: 14.5rem;">Welcome, ${username}</p>
+        <p style="top: 0; position: absolute; margin: unset; right: 14.5rem;">Welcome, <security:authentication property="principal.username"/></p>
     </security:authorize>
     <security:authorize access="!isAuthenticated()">
         <a id="btn" style="right: 3rem" href="<c:url value="/signup"/>">Sign up</a>
