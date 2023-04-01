@@ -42,7 +42,7 @@ public class UserService {
         newBlogUser.setPassword(encoder.encode(dto.getPassword()));
         newBlogUser.setEmail(dto.getEmail());
         newBlogUser.setPhoneNumber(dto.getPhoneNumber());
-        newBlogUser.setUserRoles(List.of(UserRole.ADMIN));
+        newBlogUser.setUserRoles(dto.getRoles());
         userRepo.save(newBlogUser);
         return newBlogUser;
     }
