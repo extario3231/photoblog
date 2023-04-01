@@ -27,17 +27,15 @@ public class SecurityConfig {
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(HttpMethod.GET, "/profile")
+                        .requestMatchers("/profile", "/upload", "/profile/edit")
                         .hasAnyRole(USER.name(), ADMIN.name())
-                        .requestMatchers("/manage").hasRole(ADMIN.name())
-                        .requestMatchers("/upload").hasAnyRole(USER.name(), ADMIN.name())
+                        .requestMatchers("/manage", "/user/add").hasRole(ADMIN.name())
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .permitAll()
-                        .successHandler(new AuthSuccessHandler())
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -47,7 +45,8 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/")
                 )
                 .authenticationProvider(authenticationProvider())
-                .csrf().disable()
+                .csrf()
+                .and()
                 .build();
     }
 
