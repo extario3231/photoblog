@@ -15,7 +15,7 @@
         <br>
         <input type="file" name="photos" multiple>
         <br>
-        <button>Upload</button>
+        <button type="submit">Upload</button>
     </form:form>
 </body>
 </html>

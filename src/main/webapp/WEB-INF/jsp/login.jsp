@@ -17,7 +17,7 @@
         <br>
         <form:input path="password" type="password"/>
         <br>
-        <button>Log in</button>
+        <button type="submit">Log in</button>
     </form:form>
 </body>
 </html>
