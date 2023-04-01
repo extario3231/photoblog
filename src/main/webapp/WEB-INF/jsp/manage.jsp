@@ -7,13 +7,25 @@
 </head>
 <body>
     <h2>List of users</h2>
+    <a id="btn" href="/user/add" style="right: 0">Add user</a>
     <div style="text-align: center">
-        <c:forEach var="blogUser" items="${users}">
-                Username: ${blogUser.username}<br>
-                Description: ${blogUser.description}<br>
-                Phone number: ${blogUser.phoneNumber}<br>
-                Email: ${blogUser.email}<br>
-        </c:forEach>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Description</th>
+                <th>Phone number</th>
+                <th>Email</th>
+            </tr>
+            <c:forEach var="user" items="${users}">
+                <tr>
+                    <td>${user.username}</td>
+                    <td>${user.description}</td>
+                    <td>${user.phoneNumber}</td>
+                    <td>${user.email}</td>
+                    <td><a href="/user/delete/${user.id}">Delete</a></td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
 </body>
 </html>
