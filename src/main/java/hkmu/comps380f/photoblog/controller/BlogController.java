@@ -8,7 +8,6 @@ import hkmu.comps380f.photoblog.model.dto.PhotoDto;
 import hkmu.comps380f.photoblog.service.CommentService;
 import hkmu.comps380f.photoblog.service.PhotoService;
 import hkmu.comps380f.photoblog.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +42,6 @@ public class BlogController {
     public String index(ModelMap modelMap) {
         List<Photo> allPhotos = photoService.findAll();
         modelMap.addAttribute("photos", allPhotos);
-//        modelMap.addAttribute("username", user.getName());
         return "index";
     }
 

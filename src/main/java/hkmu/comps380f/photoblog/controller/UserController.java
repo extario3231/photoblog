@@ -50,7 +50,6 @@ public class UserController {
         context.setAuthentication(token);
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("username", userDto.getUsername());
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, context);
 
         return new RedirectView("/", true);
