@@ -13,7 +13,8 @@
 
     <security:authorize access="hasRole('ADMIN')">
         <form method="post" action="/photo/delete/${photo.id}">
-            <button id="btn" style="right: 0;">Delete</button>
+            <button id="btn" type="submit" style="right: 0;">Delete</button>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         </form>
     </security:authorize>
 

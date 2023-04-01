@@ -22,7 +22,8 @@
             <textarea name="description" cols="30" rows="3">${description}</textarea>
         </label>
         <br>
-        <button>OK</button>
+        <button type="submit">OK</button>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     </form>
 </body>
 </html>
