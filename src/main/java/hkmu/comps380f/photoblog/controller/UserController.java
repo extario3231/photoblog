@@ -13,7 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
@@ -86,6 +89,18 @@ public class UserController {
     @PostMapping("/user/delete/{id}")
     public String deleteUserById(@PathVariable Long id) {
         userService.deleteById(id);
+        return "redirect:/manage";
+    }
+
+    @GetMapping("/user/add")
+    public ModelAndView viewAddUserPage(ModelMap modelMap) {
+        modelMap.addAttribute("roles", new String[]{"USER", "ADMIN"});
+        return new ModelAndView("addUser", "userForm", new UserDto());
+    }
+
+    @PostMapping(value = "/user/add")
+    public String addUser(UserDto dto) {
+        userService.saveNewUser(dto);
         return "redirect:/manage";
     }
 }
