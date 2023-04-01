@@ -1,10 +1,15 @@
 package hkmu.comps380f.photoblog.model.dto;
 
+import hkmu.comps380f.photoblog.model.UserRole;
+
+import java.util.List;
+
 public class UserDto {
     private String username;
     private String phoneNumber;
     private String password;
     private String email;
+    private List<UserRole> roles;
 
     public String getUsername() {
         return username;
@@ -36,5 +41,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 }
