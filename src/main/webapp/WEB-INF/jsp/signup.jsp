@@ -24,8 +24,9 @@
         <form:label path="email">Email</form:label>
         <br>
         <form:input path="email" type="text"/>
+        <form:input path="roles" value="USER" hidden="true"/>
         <br>
-        <button>Sign up</button>
+        <button type="submit">Sign up</button>
     </form:form>
 </body>
 </html>
