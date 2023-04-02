@@ -2,7 +2,6 @@ package hkmu.comps380f.photoblog.service;
 
 import hkmu.comps380f.photoblog.exception.UserNotFoundException;
 import hkmu.comps380f.photoblog.model.BlogUser;
-import hkmu.comps380f.photoblog.model.UserRole;
 import hkmu.comps380f.photoblog.model.dto.UserDto;
 import hkmu.comps380f.photoblog.repo.UserRepo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
