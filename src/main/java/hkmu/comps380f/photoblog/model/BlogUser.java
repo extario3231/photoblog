@@ -8,7 +8,7 @@ import org.hibernate.annotations.FetchMode;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "blog_user")
 public class BlogUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
