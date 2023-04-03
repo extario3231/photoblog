@@ -65,6 +65,7 @@ public class BlogController {
                 throw new RuntimeException(e);
             }
 
+            newPhoto.setName(photo.getOriginalFilename());
             newPhoto.setDescription(dto.getDescription());
             newPhoto.setUploader(user.getName());
             newPhoto.setUploadTime(uploadTime);
@@ -112,5 +113,12 @@ public class BlogController {
         List<BlogUser> allBlogUsers = userService.findAll();
         modelMap.addAttribute("users", allBlogUsers);
         return "manage";
+    }
+
+    @GetMapping("/upload/history")
+    public String viewUploadHistory(ModelMap map) {
+        List<Photo> photos = photoService.findAll();
+        map.addAttribute("photos", photos);
+        return "uploadHistory";
     }
 }

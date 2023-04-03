@@ -16,6 +16,7 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     @Lob
     private String content;
     private String description;
@@ -23,7 +24,7 @@ public class Photo {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime uploadTime;
     @ManyToOne(cascade = {MERGE, PERSIST, REFRESH, DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user.id")
+    @JoinColumn(name = "blog_user.id")
     private BlogUser user;
     @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
@@ -36,6 +37,14 @@ public class Photo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getContent() {
@@ -67,7 +76,7 @@ public class Photo {
     }
 
     public String getUploadTimeString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm:ss");
         return uploadTime.format(formatter);
     }
 
