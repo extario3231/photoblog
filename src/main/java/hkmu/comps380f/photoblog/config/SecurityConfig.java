@@ -26,7 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/profile", "/upload", "/profile/edit")
+                        .requestMatchers("/profile", "/upload", "/profile/edit", "/upload/history")
                         .hasAnyRole(USER.name(), ADMIN.name())
                         .requestMatchers("/manage", "/user/add").hasRole(ADMIN.name())
                         .anyRequest().permitAll()
