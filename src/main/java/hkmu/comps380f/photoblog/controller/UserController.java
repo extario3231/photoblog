@@ -97,7 +97,7 @@ public class UserController {
         return new ModelAndView("addUser", "userForm", new UserDto());
     }
 
-    @PostMapping(value = "/user/add")
+    @PostMapping("/user/add")
     public String addUser(UserDto dto) {
         userService.saveNewUser(dto);
         return "redirect:/manage";
