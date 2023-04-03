@@ -9,7 +9,7 @@
 </head>
 <body>
     <h2>Uploaded by ${photo.uploader} on ${photo.uploadTimeString}</h2><br>
-    <img src="data:image/jpg;base64, ${photo.content}" style="display: block; margin-left: auto; margin-right: auto"><br>
+    <img src="data:image/jpg;base64, ${photo.content}" style="display: block; margin-left: auto; margin-right: auto" alt="${photo.name}"><br>
 
     <security:authorize access="hasRole('ADMIN')">
         <form method="post" action="/photo/delete/${photo.id}">
