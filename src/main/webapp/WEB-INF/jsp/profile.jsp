@@ -13,6 +13,7 @@
 <body>
     <h1>My Profile</h1>
     <br>
+    <a id="btn" href="/upload/history" style="right: 0">Upload History</a>
     <p>Name: <security:authentication property="principal.username"/></p>
     <br>
     <p>Description: ${description}</p>
@@ -21,7 +22,7 @@
     <h2>Photos:</h2>
     <hr>
     <c:forEach var="photo" items="${photos}">
-        <img src="data:image/jpg;base64, ${photo.content}">
+        <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}">
         <br>
     </c:forEach>
 </body>
