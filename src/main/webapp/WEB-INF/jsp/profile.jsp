@@ -1,4 +1,5 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,11 +20,18 @@
     <p>Description: ${description}</p>
     <a id="btn" href="/profile/edit">Edit</a>
     <br>
-    <h2>Photos:</h2>
+    <h2>Photos</h2>
     <hr>
-    <c:forEach var="photo" items="${photos}">
-        <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}">
-        <br>
-    </c:forEach>
+    <c:choose>
+        <c:when test="${empty photos}">
+            <p>No photos uploaded yet</p>
+        </c:when>
+        <c:otherwise>
+            <c:forEach var="photo" items="${photos}">
+                <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}">
+                <br>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
 </body>
 </html>
