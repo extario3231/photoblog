@@ -34,9 +34,13 @@ public class UserService {
 
     @Transactional
     public BlogUser saveNewUser(UserDto dto) {
+        if (userRepo.existsByUsername(dto.getUsername()))
+            return null;
+
         BlogUser newBlogUser = new BlogUser();
         newBlogUser.setUsername(dto.getUsername());
         newBlogUser.setPassword(encoder.encode(dto.getPassword()));
+        newBlogUser.setDescription(dto.getDescription());
         newBlogUser.setEmail(dto.getEmail());
         newBlogUser.setPhoneNumber(dto.getPhoneNumber());
         newBlogUser.setUserRoles(dto.getRoles());
