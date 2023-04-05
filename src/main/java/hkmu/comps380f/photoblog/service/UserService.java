@@ -10,16 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static hkmu.comps380f.photoblog.config.SecurityConfig.passwordEncoder;
-
 @Service
 public class UserService {
     private final UserRepo userRepo;
     private final BCryptPasswordEncoder encoder;
 
-    public UserService(UserRepo userRepo) {
+    public UserService(UserRepo userRepo, BCryptPasswordEncoder encoder) {
         this.userRepo = userRepo;
-        this.encoder = passwordEncoder();
+        this.encoder = encoder;
     }
 
     public List<BlogUser> findAll() {
