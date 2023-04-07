@@ -4,18 +4,19 @@ import hkmu.comps380f.photoblog.exception.UserNotFoundException;
 import hkmu.comps380f.photoblog.model.BlogUser;
 import hkmu.comps380f.photoblog.model.dto.UserDto;
 import hkmu.comps380f.photoblog.repo.UserRepo;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@SuppressWarnings("deprecated")
 public class UserService {
     private final UserRepo userRepo;
-    private final BCryptPasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
-    public UserService(UserRepo userRepo, BCryptPasswordEncoder encoder) {
+    public UserService(UserRepo userRepo, PasswordEncoder encoder) {
         this.userRepo = userRepo;
         this.encoder = encoder;
     }
