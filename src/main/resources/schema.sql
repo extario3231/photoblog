@@ -38,11 +38,11 @@ create table if not exists photo (
     foreign key ("blog_user_id") references blog_user
 );
 
-insert into blog_user (id, username, phone_number, password, email, description, user_roles)
-values (default, 'chris', '75639562', 'chris', 'chris@hkmu.edu', 'I am Chris', array['USER']);
+merge into blog_user key (id)
+values (1, 'chris', 'chris', '75639562', 'chris@hkmu.edu', 'I am Chris', array['USER']);
 
-insert into blog_user (id, username, phone_number, password, email, description, user_roles)
-values (default, 'sarah', '51236785', 'sarah', 'sarah@hkmu.edu', 'I am Sarah', array['USER']);
+merge into blog_user key (id)
+values (2, 'sarah', 'sarah', '51236785', 'sarah@hkmu.edu', 'I am Sarah', array['USER']);
 
-insert into blog_user (id, username, phone_number, password, email, description, user_roles)
-values (default, 'max', '64023198', 'max', 'max@hkmu.edu', 'I am Max', array['USER', 'ADMIN']);
+merge into blog_user key (id)
+values (3, 'max', 'max', '64023198', 'max@hkmu.edu', 'I am Max', array['USER', 'ADMIN']);
