@@ -1,6 +1,7 @@
 package hkmu.comps380f.photoblog.controller;
 
 import hkmu.comps380f.photoblog.model.BlogUser;
+import hkmu.comps380f.photoblog.model.UserRole;
 import hkmu.comps380f.photoblog.model.dto.UserDto;
 import hkmu.comps380f.photoblog.service.BlogUserDetailsService;
 import hkmu.comps380f.photoblog.service.UserService;
@@ -78,7 +79,6 @@ public class UserController {
 
     @PostMapping("/profile/edit")
     public String editProfile(@RequestBody MultiValueMap<String, String> description, Principal user) {
-        System.out.println(description);
         BlogUser blogUser = userService.findByUsername(user.getName());
         blogUser.setDescription(description.get("description").get(0));
         userService.save(blogUser);
@@ -93,7 +93,7 @@ public class UserController {
 
     @GetMapping("/user/add")
     public ModelAndView viewAddUserPage(ModelMap modelMap) {
-        modelMap.addAttribute("roles", new String[]{"USER", "ADMIN"});
+        modelMap.addAttribute("roles", UserRole.values());
         return new ModelAndView("addUser", "userForm", new UserDto());
     }
 
