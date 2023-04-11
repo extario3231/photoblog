@@ -23,7 +23,6 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -51,26 +50,11 @@ public class BlogController {
     }
 
     @PostMapping("/upload")
-    public View upload(PhotoDto dto, Principal user) {
+    public View upload(PhotoDto dto, Principal user) throws IOException {
         LocalDateTime uploadTime = LocalDateTime.now(ZoneId.systemDefault()).truncatedTo(ChronoUnit.SECONDS);
 
         for (MultipartFile photo : dto.getPhotos()) {
-            Photo newPhoto = new Photo();
-
-            try {
-                byte[] content = photo.getBytes();
-                if (content.length == 0) return new RedirectView("/upload", true);
-                newPhoto.setContent(Base64.getEncoder().encodeToString(content));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            newPhoto.setName(photo.getOriginalFilename());
-            newPhoto.setDescription(dto.getDescription());
-            newPhoto.setUploader(user.getName());
-            newPhoto.setUploadTime(uploadTime);
-            newPhoto.setUser(userService.findByUsername(user.getName()));
-            photoService.save(newPhoto);
+            photoService.save(dto, photo, user, uploadTime);
         }
 
         return new RedirectView("/", true);
@@ -116,8 +100,8 @@ public class BlogController {
     }
 
     @GetMapping("/upload/history")
-    public String viewUploadHistory(ModelMap map) {
-        List<Photo> photos = photoService.findAll();
+    public String viewUploadHistory(ModelMap map, Principal user) {
+        List<Photo> photos = photoService.findAllByUploader(user.getName());
         map.addAttribute("photos", photos);
         return "uploadHistory";
     }
