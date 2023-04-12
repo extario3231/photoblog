@@ -70,11 +70,7 @@ public class BlogController {
     @PostMapping("/photo/{id}")
     public View addComment(@PathVariable Long id, ModelMap modelMap, CommentDto dto, Principal user) {
         Photo photo = photoService.findById(id);
-        Comment newComment = new Comment();
-        newComment.setComment(dto.getComment());
-        newComment.setPhoto(photo);
-        newComment.setUsername(user.getName());
-        commentService.save(newComment);
+        commentService.save(dto, photo, user.getName());
         modelMap.addAttribute("photo", photo);
 
         return new RedirectView("/photo/"+id, true);
