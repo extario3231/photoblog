@@ -29,10 +29,6 @@ public class UserService {
         return userRepo.findByUsername(name).orElseThrow(UserNotFoundException::new);
     }
 
-    public BlogUser findByUsername(Long id) {
-        return userRepo.findById(id).orElseThrow(UserNotFoundException::new);
-    }
-
     @Transactional
     public BlogUser saveNewUser(UserDto dto) {
         if (userRepo.existsByUsername(dto.getUsername()))
@@ -45,6 +41,7 @@ public class UserService {
         newBlogUser.setEmail(dto.getEmail());
         newBlogUser.setPhoneNumber(dto.getPhoneNumber());
         newBlogUser.setUserRoles(dto.getRoles());
+
         userRepo.save(newBlogUser);
         return newBlogUser;
     }
@@ -52,10 +49,6 @@ public class UserService {
     @Transactional(rollbackFor = UserNotFoundException.class)
     public void save(BlogUser blogUser) {
         userRepo.save(blogUser);
-    }
-
-    public void deleteByName(String name) {
-        userRepo.deleteByUsername(name);
     }
 
     public void deleteById(Long id) {
