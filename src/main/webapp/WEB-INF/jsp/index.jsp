@@ -23,14 +23,18 @@
     </security:authorize>
     <br>
     <table>
-        <c:forEach var="photo" items="${photos}">
-            <tr>
-                <td>
-                    <a href="<c:url value="/photo/${photo.id}"/>">
-                        <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}" height="300" width="450">
-                    </a>
-                </td>
-            </tr>
+        <c:forEach var="photo" items="${photos}" varStatus="status">
+            <c:if test="${status.index % 4 == 0}">
+                <tr>
+            </c:if>
+            <td>
+                <a href="<c:url value="/photo/${photo.id}"/>">
+                    <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}" height="300" width="450">
+                </a>
+            </td>
+            <c:if test="${(status.index + 1) % 4 == 0 || status.last}">
+                </tr>
+            </c:if>
         </c:forEach>
     </table>
 </body>
