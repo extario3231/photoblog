@@ -33,21 +33,23 @@
         </c:if>
     </c:forEach>
     <br>
-    <form:form method="POST" modelAttribute="commentForm">
-        <form:label path="comment">Write a comment</form:label>
-        <br>
-        <security:authorize access="isAnonymous()">
+    Write a comment
+    <br>
+    <security:authorize access="isAnonymous()">
+        <form method="get" action="/login">
             <label>
                 <textarea rows="3" cols="20" disabled>Log in to comment</textarea>
             </label>
             <br>
-            <button disabled>Comment</button>
-        </security:authorize>
-        <security:authorize access="isAuthenticated()">
+            <button type="submit">Log in</button>
+        </form>
+    </security:authorize>
+    <security:authorize access="isAuthenticated()">
+        <form:form method="POST" modelAttribute="commentForm">
             <form:textarea rows="3" cols="20" path="comment"/>
             <br>
             <button type="submit">Comment</button>
-        </security:authorize>
-    </form:form>
+        </form:form>
+    </security:authorize>
 </body>
 </html>
