@@ -10,7 +10,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    @ManyToOne(cascade = {MERGE, PERSIST, REFRESH, DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "photo.id")
     private Photo photo;
     private String username;

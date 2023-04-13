@@ -20,7 +20,7 @@ public class BlogUser {
     private String password;
     private String email;
     private String description;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 20)
     private List<Photo> photos;
