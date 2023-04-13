@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<BlogUser, Long> {
     Optional<BlogUser> findByUsername(String username);
-    void deleteByUsername(String name);
     boolean existsByUsername(String username);
 }
