@@ -23,10 +23,10 @@ public class Photo {
     private String uploader;
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime uploadTime;
-    @ManyToOne(cascade = {MERGE, PERSIST, REFRESH, DETACH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_user.id")
     private BlogUser user;
-    @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY, orphanRemoval = true, cascade = {MERGE, REFRESH, DETACH})
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 20)
     private List<Comment> comments;
