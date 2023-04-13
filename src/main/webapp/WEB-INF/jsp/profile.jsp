@@ -27,10 +27,13 @@
             <p>No photos uploaded yet</p>
         </c:when>
         <c:otherwise>
-            <c:forEach var="photo" items="${photos}">
-                <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}">
-                <br>
-            </c:forEach>
+            <div class="photo-grid">
+                <c:forEach var="photo" items="${photos}">
+                    <a href="/photo/${photo.id}">
+                        <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}">
+                    </a>
+                </c:forEach>
+            </div>
         </c:otherwise>
     </c:choose>
 </body>

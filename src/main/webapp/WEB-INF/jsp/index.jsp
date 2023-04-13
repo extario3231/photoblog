@@ -22,20 +22,12 @@
         <a id="btn" style="right: 0" href="<c:url value="/login"/>">Log in</a>
     </security:authorize>
     <br>
-    <table>
+    <div class="photo-grid">
         <c:forEach var="photo" items="${photos}" varStatus="status">
-            <c:if test="${status.index % 4 == 0}">
-                <tr>
-            </c:if>
-            <td>
-                <a href="<c:url value="/photo/${photo.id}"/>">
-                    <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}" height="300" width="450">
-                </a>
-            </td>
-            <c:if test="${(status.index + 1) % 4 == 0 || status.last}">
-                </tr>
-            </c:if>
+            <a href="<c:url value="/photo/${photo.id}"/>">
+                <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}">
+            </a>
         </c:forEach>
-    </table>
+    </div>
 </body>
 </html>
