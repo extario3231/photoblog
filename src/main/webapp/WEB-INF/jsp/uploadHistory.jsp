@@ -11,12 +11,14 @@
     <table style="text-align: center">
         <tr>
             <th>Photo name</th>
+            <th>Uploader</th>
             <th>Upload time</th>
         </tr>
 
         <c:forEach var="photo" items="${photos}">
             <tr>
                 <td><a href="/photo/${photo.id}">${photo.name}</a></td>
+                <td>${photo.uploader}</td>
                 <td>${photo.uploadTimeString}</td>
             </tr>
         </c:forEach>
