@@ -6,3 +6,15 @@ h1, h2 {
     position: absolute;
     top: 0;
 }
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+.photo-grid img {
+    width: 100%;
+    height: auto;
+}
+
