@@ -97,7 +97,7 @@ public class BlogController {
 
     @GetMapping("/upload/history")
     public String viewUploadHistory(ModelMap map, Principal user) {
-        List<Photo> photos = photoService.findAllByUploader(user.getName());
+        List<Photo> photos = photoService.findAll();
         map.addAttribute("photos", photos);
         return "uploadHistory";
     }
