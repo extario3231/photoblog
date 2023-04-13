@@ -28,10 +28,6 @@ public class PhotoService {
         return photoRepo.findAll();
     }
 
-    public List<Photo> findAllByUploader(String username) {
-        return photoRepo.findAllByUploader(username);
-    }
-
     public Photo findById(Long id) {
         return photoRepo.findById(id).orElseThrow(PhotoNotFoundException::new);
     }
