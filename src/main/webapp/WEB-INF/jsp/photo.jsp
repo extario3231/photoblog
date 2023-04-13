@@ -25,7 +25,7 @@
         <p style="text-align: center; margin: 0">From ${comment.username}:<br>${comment.comment}</p>
         <security:authorize access="hasRole('ADMIN')">
             <form action="/photo/${photo.id}/comment/delete/${comment.id}" method="post" style="text-align: center">
-                <button>Delete comment</button>
+                <button type="submit">Delete comment</button>
             </form>
         </security:authorize>
         <c:if test="${!status.last}">
@@ -46,7 +46,7 @@
         <security:authorize access="isAuthenticated()">
             <form:textarea rows="3" cols="20" path="comment"/>
             <br>
-            <button>Comment</button>
+            <button type="submit">Comment</button>
         </security:authorize>
     </form:form>
 </body>
