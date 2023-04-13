@@ -37,12 +37,3 @@ create table if not exists photo (
     primary key (id),
     foreign key ("blog_user_id") references blog_user
 );
-
-merge into blog_user key (id)
-values (1, 'chris', 'chris', '75639562', 'chris@hkmu.edu', 'I am Chris', array['USER']);
-
-merge into blog_user key (id)
-values (2, 'sarah', 'sarah', '51236785', 'sarah@hkmu.edu', 'I am Sarah', array['USER']);
-
-merge into blog_user key (id)
-values (3, 'max', 'max', '64023198', 'max@hkmu.edu', 'I am Max', array['USER', 'ADMIN']);
