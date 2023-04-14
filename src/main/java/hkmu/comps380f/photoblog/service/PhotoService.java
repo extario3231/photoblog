@@ -1,11 +1,10 @@
 package hkmu.comps380f.photoblog.service;
 
+import hkmu.comps380f.photoblog.exception.PhotoNotFoundException;
 import hkmu.comps380f.photoblog.model.Photo;
 import hkmu.comps380f.photoblog.model.dto.PhotoDto;
 import hkmu.comps380f.photoblog.repo.PhotoRepo;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,13 +20,10 @@ import java.util.List;
 public class PhotoService {
     private final PhotoRepo photoRepo;
     private final UserService userService;
-    @PersistenceContext
-    private final EntityManager manager;
 
     public PhotoService(PhotoRepo photoRepo, UserService userService, EntityManager manager) {
         this.photoRepo = photoRepo;
         this.userService = userService;
-        this.manager = manager;
     }
 
     public List<Photo> findAll() {
@@ -35,8 +31,7 @@ public class PhotoService {
     }
 
     public Photo findById(Long id) {
-        Session session = manager.unwrap(Session.class).getSessionFactory().openSession();
-        return session.get(Photo.class, id);
+        return photoRepo.findById(id).orElseThrow(PhotoNotFoundException::new);
     }
 
     @Transactional
