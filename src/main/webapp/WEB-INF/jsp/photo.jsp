@@ -20,12 +20,13 @@
 
     <h2>Comments</h2>
     <hr>
-    <c:forEach var="comment" items="${photo.comments}" varStatus="status">
+    <c:forEach var="comment" items="${comments}" varStatus="status">
 
         <p style="text-align: center; margin: 0">From ${comment.username}:<br>${comment.comment}</p>
         <security:authorize access="hasRole('ADMIN')">
             <form action="/photo/${photo.id}/comment/delete/${comment.id}" method="post" style="text-align: center">
                 <button type="submit">Delete comment</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
             </form>
         </security:authorize>
         <c:if test="${!status.last}">
