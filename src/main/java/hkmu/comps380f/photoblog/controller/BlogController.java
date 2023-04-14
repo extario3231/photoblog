@@ -63,16 +63,16 @@ public class BlogController {
     @GetMapping("/photo/{id}")
     public ModelAndView viewPhoto(@PathVariable Long id, ModelMap modelMap) {
         Photo photo = photoService.findById(id);
+        List<Comment> comments = commentService.findAllByPhoto(id);
         modelMap.addAttribute("photo", photo);
+        modelMap.addAttribute("comments", comments);
         return new ModelAndView("photo", "commentForm", new CommentDto());
     }
 
     @PostMapping("/photo/{id}")
     public View addComment(@PathVariable Long id, ModelMap modelMap, CommentDto dto, Principal user) {
-        Photo photo = photoService.findById(id);
-        commentService.save(dto, photo, user.getName());
+        Photo photo = commentService.save(dto, id, user.getName());
         modelMap.addAttribute("photo", photo);
-
         return new RedirectView("/photo/"+id, true);
     }
 
