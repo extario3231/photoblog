@@ -15,6 +15,14 @@
     <br>
     <form:input path="password" type="password"/>
     <br>
+    <form:label path="email">Email</form:label>
+    <br>
+    <form:input path="email" type="text"/>
+    <br>
+    <form:label path="phoneNumber">Phone number</form:label>
+    <br>
+    <form:input path="phoneNumber" type="text"/>
+    <br>
     <form:checkboxes path="roles" items="${roles}"/>
     <br>
     <button>Create</button>
