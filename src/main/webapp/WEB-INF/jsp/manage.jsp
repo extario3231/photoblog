@@ -22,7 +22,12 @@
                     <td>${user.description}</td>
                     <td>${user.phoneNumber}</td>
                     <td>${user.email}</td>
-                    <td><a href="/user/delete/${user.id}">Delete</a></td>
+                    <td>
+                        <form action="/user/delete/${user.id}" method="post">
+                            <button type="submit">Delete</button>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
