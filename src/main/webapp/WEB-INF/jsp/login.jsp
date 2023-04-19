@@ -1,8 +1,8 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Log in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="<c:url value="/style.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>

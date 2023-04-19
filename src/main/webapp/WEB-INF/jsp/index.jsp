@@ -1,9 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="<c:url value="/style.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -25,9 +24,11 @@
     <br>
     <div class="photo-grid">
         <c:forEach var="photo" items="${photos}" varStatus="status">
-            <a href="<c:url value="/photo/${photo.id}"/>">
-                <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}">
-            </a>
+            <div class="inline-block align-middle">
+                <a href="<c:url value="/photo/${photo.id}"/>">
+                    <img src="data:image/jpg;base64, ${photo.content}" alt="${photo.name}" class="max-w-full max-h-full">
+                </a>
+            </div>
         </c:forEach>
     </div>
 </body>

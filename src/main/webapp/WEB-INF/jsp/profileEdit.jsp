@@ -1,8 +1,8 @@
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Edit Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="<c:url value="/style.css"/>" rel="stylesheet" type="text/css">
     <style>
         p {
